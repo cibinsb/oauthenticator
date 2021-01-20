@@ -70,6 +70,8 @@ class MultiLoginHandler(LoginHandler):
         concat_data = {
             'next': self.get_argument('next', ''),
         }
+        print("@"*120)
+        print(self)
         if self.authenticator.enable_google and self.get_argument('login_google', None):
             login_url = '{}://{}{}google/login'.format(self.request.protocol, self.request.host, self.hub.base_url)
             self.redirect(url_concat(login_url, concat_data))
