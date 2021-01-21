@@ -62,12 +62,12 @@ from oauthenticator.multioauthenticator import MultiOAuthenticator
 c.JupyterHub.authenticator_class = 'oauthenticator.multioauthenticator.MultiOAuthenticator'
 
 c.GitHubOAuthenticator_New.oauth_callback_url = "http://localhost:8000/hub/github/callback"
-c.GitHubOAuthenticator_New.client_id = "Iv1.253708b6e9ce76ec"
-c.GitHubOAuthenticator_New.client_secret = "b88cfd121e1a684d0d0b2132145c1dc5a478b71e"
+c.GitHubOAuthenticator_New.client_id = ""
+c.GitHubOAuthenticator_New.client_secret = ""
 
 c.GoogleOAuthenticator.oauth_callback_url = "http://localhost:8000/hub/google/callback"
-c.GoogleOAuthenticator.client_id = "992455022125-l59j5leba3jsrirl14hb2ou0j18t6t06.apps.googleusercontent.com"
-c.GoogleOAuthenticator.client_secret = "djGBiP5Fixa0XZpNmPCFejv9"
+c.GoogleOAuthenticator.client_id = ""
+c.GoogleOAuthenticator.client_secret = ""
 
 # c.HydroShareOAuthenticator.oauth_callback_url = 'http://localhost:8000/hub/hydroshare/callback'
 # c.HydroShareOAuthenticator.client_id = 'xxxxx'
