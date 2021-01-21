@@ -64,3 +64,6 @@ jupyterhub_cookie_secret
 
 .vscode/
 .idea/
+
+#custom files
+examples/multi_oauth/jupyterhub_config.py

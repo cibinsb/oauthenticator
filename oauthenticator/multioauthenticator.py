@@ -47,6 +47,8 @@ class MultiLoginHandler(LoginHandler):
         """
         Simplify rendering as there is no username
         """
+        self.log.info("#"*120)
+        self.log.info("inside get")
         self.statsd.incr('login.request')
         if hasattr(self, 'current_user'):
             user = self.current_user
@@ -70,8 +72,8 @@ class MultiLoginHandler(LoginHandler):
         concat_data = {
             'next': self.get_argument('next', ''),
         }
-        print("@"*120)
-        print(self)
+        self.log.info("@"*120)
+        self.log.info(self)
         if self.authenticator.enable_google and self.get_argument('login_google', None):
             login_url = '{}://{}{}google/login'.format(self.request.protocol, self.request.host, self.hub.base_url)
             self.redirect(url_concat(login_url, concat_data))
