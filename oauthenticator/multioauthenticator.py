@@ -58,6 +58,8 @@ class MultiLoginHandler(LoginHandler):
             # set new login cookie
             # because single-user cookie may have been cleared or incorrect
             self.set_login_cookie(self.get_current_user())
+            self.log.info("$"*120)
+            self.log.info(self.get_next_url(user))
             self.redirect(self.get_next_url(user), permanent=False)
         else:
             self.finish(self._render())
