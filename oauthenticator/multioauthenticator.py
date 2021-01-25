@@ -58,8 +58,6 @@ class MultiLoginHandler(LoginHandler):
             # set new login cookie
             # because single-user cookie may have been cleared or incorrect
             self.set_login_cookie(self.get_current_user())
-            self.log.info("$"*120)
-            self.log.info(self.get_next_url(user))
             self.redirect(self.get_next_url(user), permanent=False)
         else:
             self.finish(self._render())
@@ -72,8 +70,10 @@ class MultiLoginHandler(LoginHandler):
         Redirect to the handler for the appropriate oauth selected
         """
         concat_data = {
-            'next': self.get_argument('next', ''),
+            'next': self.get_argument('redirect_uri', ''),
         }
+        self.log.info("#"*120)
+        self.log.info(concat_data)
         if self.authenticator.enable_google and self.get_argument('login_google', None):
             login_url = '{}://{}{}google/login'.format(self.request.protocol, self.request.host, self.hub.base_url)
             self.redirect(url_concat(login_url, concat_data))
@@ -167,7 +167,6 @@ class MultiOAuthenticator(Authenticator):
                 return auth_obj.oauth_callback_url
         return "CALLBACK_URL_NOT_SET"
 
-        return callback_url
 
     def validate_username(self, username):
         return super().validate_username(username)
