@@ -77,11 +77,11 @@ class OAuthLoginHandler(BaseHandler):
             # disallow hostname-having urls,
             # force absolute path redirect
             urlinfo = urlparse(next_url)
-            next_url = urlinfo._replace(
-                scheme='',
-                netloc='',
-                path='/' + urlinfo.path.lstrip('/'),
-            ).geturl()
+            # next_url = urlinfo._replace(
+            #     scheme='',
+            #     netloc='',
+            #     path='/' + urlinfo.path.lstrip('/'),
+            # ).geturl()
             if next_url != original_next_url:
                 self.log.warning(
                     "Ignoring next_url %r, using %r",

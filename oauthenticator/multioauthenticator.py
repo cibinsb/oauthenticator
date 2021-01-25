@@ -56,7 +56,7 @@ class MultiLoginHandler(LoginHandler):
             # set new login cookie
             # because single-user cookie may have been cleared or incorrect
             self.set_login_cookie(self.get_current_user())
-            self.redirect("http://www.google.com/", permanent=False)
+            self.redirect(self.get_next_url(user), permanent=False)
         else:
             self.finish(self._render())
 
