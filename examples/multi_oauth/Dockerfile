@@ -1,4 +1,4 @@
-# docker build -t hub .
+# docker build --no-cache -t hub .
 # docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock --net jupyterhub --name jupyterhub -p8000:8000 hub
 FROM jupyterhub/jupyterhub:0.9.4
 COPY requirements.txt /tmp/requirements.txt

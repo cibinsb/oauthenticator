@@ -15,7 +15,7 @@
 {% elif oauth_list %}
     {% for oauth_name in oauth_list %}
         <div class="service-login">
-            <a role="button" class='btn btn-jupyter btn-lg' href='/{{oauth_name|lower}}/login?next=http://www.google.co.in'>
+            <a role="button" class='btn btn-jupyter btn-lg' href='/{{oauth_name|lower}}/login'>
                 Sign in with {{ oauth_name }}
             </a>
         </div>
