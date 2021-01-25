@@ -1,4 +1,4 @@
-from urllib.parse import urlsplit
+from urllib.parse import urlsplit,urlencode
 
 from tornado import gen
 from tornado.escape import url_escape
@@ -37,7 +37,7 @@ class MultiLoginHandler(LoginHandler):
             next=url_escape(nextval),
             oauth_list=oauth_list,
             login_error=login_error,
-            query_params=url_escape(self.request.arguments),
+            query_params=urlencode(self.request.arguments),
             authenticator_login_url=url_concat(
                 self.authenticator.login_url(self.hub.base_url),
                 {'next': nextval},
