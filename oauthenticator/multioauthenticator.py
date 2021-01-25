@@ -1,4 +1,4 @@
-from urllib.parse import urlsplit,urlencode,parse_qs
+from urllib.parse import urlsplit,urlencode,urlparse
 
 from tornado import gen
 from tornado.escape import url_escape
@@ -31,10 +31,8 @@ class MultiLoginHandler(LoginHandler):
             auth_obj = auth_class(config=self.config)
             oauth_list.append(str(auth_obj.login_service))
         self.log.info("^"*120)
-        self.log.info(self.request.uri)
-        q_params = dict(parse_qs("".join(("{}={}".format(*i) for i in self.request.arguments.items()))))
-        self.log.info(q_params)
-        q_params = {k: v[0] for k, v in q_params.items()}
+        parsed_url = urlparse(self.request.uri)
+        q_params = parsed_url.query
         self.log.info(q_params)
         nextval = self.get_argument('next', default='')
         return self.render_template('login.html',
