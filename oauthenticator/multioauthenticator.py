@@ -31,13 +31,13 @@ class MultiLoginHandler(LoginHandler):
             auth_obj = auth_class(config=self.config)
             oauth_list.append(str(auth_obj.login_service))
         self.log.info("^"*120)
-        self.log.info(self.request.arguments)
+        self.log.info(dict(self.request.arguments))
         nextval = self.get_argument('next', default='')
         return self.render_template('login.html',
             next=url_escape(nextval),
             oauth_list=oauth_list,
             login_error=login_error,
-            query_params=urlencode(self.request.arguments),
+            query_params=urlencode(dict(self.request.arguments)),
             authenticator_login_url=url_concat(
                 self.authenticator.login_url(self.hub.base_url),
                 {'next': nextval},
