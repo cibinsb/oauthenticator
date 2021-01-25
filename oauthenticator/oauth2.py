@@ -213,7 +213,7 @@ class OAuthCallbackHandler(BaseHandler):
         if user is None:
             # todo: custom error page?
             raise web.HTTPError(403)
-        self.redirect("http://www.google.co.in")
+        self.redirect(self.get_next_url(user))
 
 
 class OAuthenticator(Authenticator):
