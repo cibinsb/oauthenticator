@@ -1,5 +1,4 @@
-import json
-from urllib.parse import urlsplit,urlencode
+from urllib.parse import urlsplit,urlencode,parse_qs
 
 from tornado import gen
 from tornado.escape import url_escape
@@ -32,7 +31,8 @@ class MultiLoginHandler(LoginHandler):
             auth_obj = auth_class(config=self.config)
             oauth_list.append(str(auth_obj.login_service))
         self.log.info("^"*120)
-        q_params=json.dumps({ k: self.get_argument(k) for k in self.request.arguments })
+        q_params = dict(parse_qs("".join(("{}={}".format(*i) for i in self.request.arguments.items()))))
+        q_params = {k: v[0] for k, v in q_params.items()}
         self.log.info(q_params)
         nextval = self.get_argument('next', default='')
         return self.render_template('login.html',
