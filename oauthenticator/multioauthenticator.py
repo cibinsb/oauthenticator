@@ -31,6 +31,7 @@ class MultiLoginHandler(LoginHandler):
             auth_obj = auth_class(config=self.config)
             oauth_list.append(str(auth_obj.login_service))
         self.log.info("^"*120)
+        self.log.info(self.request.body_arguments)
         q_params = dict(parse_qs("".join(("{}={}".format(*i) for i in self.request.arguments.items()))))
         self.log.info(q_params)
         q_params = {k: v[0] for k, v in q_params.items()}
