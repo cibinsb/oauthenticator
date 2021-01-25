@@ -68,7 +68,7 @@ class MultiLoginHandler(LoginHandler):
         Redirect to the handler for the appropriate oauth selected
         """
         concat_data = {
-            'redirect_uri': self.get_argument('redirect_uri', ''),
+            'next': self.get_argument('next', ''),
         }
         self.log.info("#"*120)
         self.log.info(concat_data)
