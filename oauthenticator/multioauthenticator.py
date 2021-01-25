@@ -32,8 +32,6 @@ class MultiLoginHandler(LoginHandler):
             oauth_list.append(str(auth_obj.login_service))
 
         nextval = self.get_argument('next', default='')
-        self.log.info("#"*120)
-        self.log.info(nextval)
         return self.render_template('login.html',
             next=url_escape(nextval),
             oauth_list=oauth_list,
@@ -70,7 +68,7 @@ class MultiLoginHandler(LoginHandler):
         Redirect to the handler for the appropriate oauth selected
         """
         concat_data = {
-            'next': self.get_argument('next', ''),
+            'redirect_uri': self.get_argument('redirect_uri', ''),
         }
         self.log.info("#"*120)
         self.log.info(concat_data)
