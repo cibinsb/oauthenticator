@@ -32,6 +32,7 @@ class MultiLoginHandler(LoginHandler):
             oauth_list.append(str(auth_obj.login_service))
         self.log.info("^"*120)
         q_params = dict(parse_qs("".join(("{}={}".format(*i) for i in self.request.arguments.items()))))
+        self.log.info(q_params)
         q_params = {k: v[0] for k, v in q_params.items()}
         self.log.info(q_params)
         nextval = self.get_argument('next', default='')
