@@ -62,8 +62,8 @@ from oauthenticator.multioauthenticator import MultiOAuthenticator
 c.JupyterHub.authenticator_class = 'oauthenticator.multioauthenticator.MultiOAuthenticator'
 
 c.GitHubOAuthenticator_New.oauth_callback_url = "http://localhost:8000/hub/github/callback"
-c.GitHubOAuthenticator_New.client_id = ""
-c.GitHubOAuthenticator_New.client_secret = ""
+c.GitHubOAuthenticator_New.client_id = "Iv1.253708b6e9ce76ec"
+c.GitHubOAuthenticator_New.client_secret = "b88cfd121e1a684d0d0b2132145c1dc5a478b71e"
 
 c.GoogleOAuthenticator.oauth_callback_url = "http://localhost:8000/hub/google/callback"
 c.GoogleOAuthenticator.client_id = ""
