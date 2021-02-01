@@ -30,7 +30,6 @@ class MultiLoginHandler(LoginHandler):
             auth_class = auth_info[0]
             auth_obj = auth_class(config=self.config)
             oauth_list.append(str(auth_obj.login_service))
-        self.log.info("^"*120)
         parsed_url = urlparse(self.request.uri)
         self.log.info(parsed_url.query)
         nextval = self.get_argument('next', default='')

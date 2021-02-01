@@ -175,7 +175,6 @@ class GitHubOAuthenticator(OAuthenticator):
         req = HTTPRequest(check_membership_url, method="GET", headers=headers)
         self.log.debug("Checking GitHub organization membership: %s in %s?", username, org)
         resp = await http_client.fetch(req, raise_error=False)
-        print(resp)
         if resp.code == 204:
             self.log.info("Allowing %s as member of %s", username, org)
             return True
