@@ -102,8 +102,6 @@ class OAuthLoginHandler(BaseHandler):
         redirect_uri = self.authenticator.get_callback_url(self)
         self.log.info('OAuth redirect: %r', redirect_uri)
         state = self.get_state()
-        self.log.info("&"*120)
-        self.log.info(state)
         self.set_state_cookie(state)
         self.authorize_redirect(
             redirect_uri=redirect_uri,
