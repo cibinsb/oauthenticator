@@ -21,7 +21,7 @@ from oauthenticator.github import GitHubOAuthenticator, GitHubLoginHandler
 class GitHubCallbackHandler(OAuthCallbackHandler):
     pass
 
-class GitHubOAuthenticator_New(GitHubOAuthenticator):
+class GitHubOAuthenticator_Custom(GitHubOAuthenticator):
     callback_handler = GitHubCallbackHandler
 
 
@@ -145,17 +145,13 @@ class MultiOAuthenticator(Authenticator):
         self.__scope = None
         self.__subauth_name = None
         self._auth_member_set = set()
-        if self.github_client_id and self.github_client_secret:
-            GitHubOAuthenticator_New.oauth_callback_url = self.github_oauth_callback_url
-            GitHubOAuthenticator_New.client_id = self.github_client_id
-            GitHubOAuthenticator_New.client_secret = self.github_client_secret
-            self._auth_member_set.add(tuple([GitHubOAuthenticator_New, GitHubLoginHandler, GitHubCallbackHandler]))
-        if self.google_client_secret and self.google_client_id:
-            GoogleOAuthenticator.oauth_callback_url = self.google_oauth_callback_url
-            GoogleOAuthenticator.client_id = self.google_client_id
-            GoogleOAuthenticator.client_secret = self.google_client_secret
-            self._auth_member_set.add(tuple([GoogleOAuthenticator, GoogleLoginHandler, GoogleOAuthHandler]))
-
+        oauth_providers = {"github":[GitHubOAuthenticator_Custom, GitHubLoginHandler, GitHubCallbackHandler],
+                           "google":[GoogleOAuthenticator, GoogleLoginHandler, GoogleOAuthHandler]}
+        for oauth, cls in oauth_providers.items():
+            cls[0].oauth_callback_url = eval(f'self.{oauth}_oauth_callback_url')
+            cls[0].client_id = eval(f'self.{oauth}_client_id')
+            cls[0].client_secret = eval(f'self.{oauth}_client_secret')
+            self._auth_member_set.add(tuple(cls))
     @property
     def client_id(self):
 
