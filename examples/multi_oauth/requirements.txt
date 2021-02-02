@@ -1,2 +1,2 @@
 dockerspawner
-git+https://github.com/cibinsb/oauthenticator.git@multi_auth_code_refactoring
+git+https://github.com/cibinsb/oauthenticator.git@binder_multi_auth
