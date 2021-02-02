@@ -65,9 +65,9 @@ c.MultiOAuthenticator.github_oauth_callback_url = "http://localhost:8000/hub/git
 c.MultiOAuthenticator.github_client_id = "Iv1.253708b6e9ce76ec"
 c.MultiOAuthenticator.github_client_secret = "b88cfd121e1a684d0d0b2132145c1dc5a478b71e"
 
-c.MultiOAuthenticator.google_oauth_callback_url = "http://localhost:8000/hub/google/callback"
-c.MultiOAuthenticator.google_client_id = ""
-c.MultiOAuthenticator.google_client_secret = ""
+# c.MultiOAuthenticator.google_oauth_callback_url = "http://localhost:8000/hub/google/callback"
+# c.MultiOAuthenticator.google_client_id = ""
+# c.MultiOAuthenticator.google_client_secret = ""
 
 # c.HydroShareOAuthenticator.oauth_callback_url = 'http://localhost:8000/hub/hydroshare/callback'
 # c.HydroShareOAuthenticator.client_id = 'xxxxx'

@@ -144,15 +144,17 @@ class MultiOAuthenticator(Authenticator):
         self.__client_secret = None
         self.__scope = None
         self.__subauth_name = None
-        GitHubOAuthenticator_New.oauth_callback_url = self.github_oauth_callback_url
-        GitHubOAuthenticator_New.client_id = self.github_client_id
-        GitHubOAuthenticator_New.client_secret = self.github_client_secret
-
-        GoogleOAuthenticator.oauth_callback_url = self.google_oauth_callback_url
-        GoogleOAuthenticator.client_id = self.google_client_id
-        GoogleOAuthenticator.client_secret = self.google_client_secret
-        self._auth_member_set = {tuple([GitHubOAuthenticator_New, GitHubLoginHandler, GitHubCallbackHandler]),
-                                 tuple([GoogleOAuthenticator, GoogleLoginHandler, GoogleOAuthHandler])}
+        self._auth_member_set = set()
+        if self.github_client_id and self.google_client_secret:
+            GitHubOAuthenticator_New.oauth_callback_url = self.github_oauth_callback_url
+            GitHubOAuthenticator_New.client_id = self.github_client_id
+            GitHubOAuthenticator_New.client_secret = self.github_client_secret
+            self._auth_member_set.add(tuple([GitHubOAuthenticator_New, GitHubLoginHandler, GitHubCallbackHandler]))
+        if self.google_client_secret and self.google_client_id:
+            GoogleOAuthenticator.oauth_callback_url = self.google_oauth_callback_url
+            GoogleOAuthenticator.client_id = self.google_client_id
+            GoogleOAuthenticator.client_secret = self.google_client_secret
+            self._auth_member_set.add(tuple([GoogleOAuthenticator, GoogleLoginHandler, GoogleOAuthHandler]))
 
     @property
     def client_id(self):
