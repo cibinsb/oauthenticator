@@ -16,6 +16,14 @@ from jupyterhub.user import User
 
 from oauthenticator.google import GoogleOAuthenticator, GoogleLoginHandler, GoogleOAuthHandler
 from oauthenticator.oauth2 import OAuthLoginHandler, OAuthCallbackHandler, OAuthenticator
+from oauthenticator.github import GitHubOAuthenticator, GitHubLoginHandler
+
+class GitHubCallbackHandler(OAuthCallbackHandler):
+    pass
+
+class GitHubOAuthenticator_New(GitHubOAuthenticator):
+    callback_handler = GitHubCallbackHandler
+
 
 
 class MultiLoginHandler(LoginHandler):
@@ -31,7 +39,6 @@ class MultiLoginHandler(LoginHandler):
             auth_obj = auth_class(config=self.config)
             oauth_list.append(str(auth_obj.login_service))
         parsed_url = urlparse(self.request.uri)
-        self.log.info(parsed_url.query)
         nextval = self.get_argument('next', default='')
         return self.render_template('login.html',
             next=url_escape(nextval),
@@ -72,8 +79,6 @@ class MultiLoginHandler(LoginHandler):
         concat_data = {
             'next': self.get_argument('next', ''),
         }
-        self.log.info("#"*120)
-        self.log.info(concat_data)
         if self.authenticator.enable_google and self.get_argument('login_google', None):
             login_url = '{}://{}{}google/login'.format(self.request.protocol, self.request.host, self.hub.base_url)
             self.redirect(url_concat(login_url, concat_data))
@@ -98,7 +103,18 @@ class MultiOAuthenticator(Authenticator):
                         Type(GoogleOAuthHandler, OAuthCallbackHandler, help="Must be a OAuthCallbackHandler")
                         )
     ).tag(config=True)
-
+    github_client_id = Unicode(config=True)
+    github_client_secret = Unicode(config=True)
+    github_oauth_callback_url = Unicode(
+        config=True,
+        help="""Callback Github URL to use."""
+    )
+    google_client_id = Unicode(config=True)
+    google_client_secret = Unicode(config=True)
+    google_oauth_callback_url = Unicode(
+        config=True,
+        help="""Callback Google URL to use."""
+    )
     @gen.coroutine
     def pre_spawn_start(self, user, spawner):
         subauth_name = self.__subauth_name
@@ -128,6 +144,15 @@ class MultiOAuthenticator(Authenticator):
         self.__client_secret = None
         self.__scope = None
         self.__subauth_name = None
+        GitHubOAuthenticator_New.oauth_callback_url = self.github_oauth_callback_url
+        GitHubOAuthenticator_New.client_id = self.github_client_id
+        GitHubOAuthenticator_New.client_secret = self.github_client_secret
+
+        GoogleOAuthenticator.oauth_callback_url = self.google_oauth_callback_url
+        GoogleOAuthenticator.client_id = self.google_client_id
+        GoogleOAuthenticator.client_secret = self.google_client_secret
+        self._auth_member_set = {tuple([GitHubOAuthenticator_New, GitHubLoginHandler, GitHubCallbackHandler]),
+                                 tuple([GoogleOAuthenticator, GoogleLoginHandler, GoogleOAuthHandler])}
 
     @property
     def client_id(self):
