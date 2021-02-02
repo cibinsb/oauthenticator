@@ -145,7 +145,7 @@ class MultiOAuthenticator(Authenticator):
         self.__scope = None
         self.__subauth_name = None
         self._auth_member_set = set()
-        if self.github_client_id and self.google_client_secret:
+        if self.github_client_id and self.github_client_secret:
             GitHubOAuthenticator_New.oauth_callback_url = self.github_oauth_callback_url
             GitHubOAuthenticator_New.client_id = self.github_client_id
             GitHubOAuthenticator_New.client_secret = self.github_client_secret
