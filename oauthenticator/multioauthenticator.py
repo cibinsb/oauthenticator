@@ -148,10 +148,10 @@ class MultiOAuthenticator(Authenticator):
         oauth_providers = {"github":[GitHubOAuthenticator_Custom, GitHubLoginHandler, GitHubCallbackHandler],
                            "google":[GoogleOAuthenticator, GoogleLoginHandler, GoogleOAuthHandler]}
         for oauth, cls in oauth_providers.items():
-            if eval(f'self.{oauth}_client_id') and eval(f'self.{oauth}_client_secret'):
-                cls[0].oauth_callback_url = eval(f'self.{oauth}_oauth_callback_url')
-                cls[0].client_id = eval(f'self.{oauth}_client_id')
-                cls[0].client_secret = eval(f'self.{oauth}_client_secret')
+            if getattr(self,f'{oauth}_client_id') and getattr(self,f'{oauth}_client_secret'):
+                cls[0].oauth_callback_url = getattr(self,f'{oauth}_oauth_callback_url')
+                cls[0].client_id = getattr(self,f'{oauth}_client_id')
+                cls[0].client_secret = getattr(self,f'{oauth}_client_secret')
                 self._auth_member_set.add(tuple(cls))
     @property
     def client_id(self):
